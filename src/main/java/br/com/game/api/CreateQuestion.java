@@ -20,10 +20,17 @@ public class CreateQuestion {
 		return description;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public List<AlternativePart> getAlternatives() {
 		return alternatives;
 	}
 
+	public void setAlternatives(List<AlternativePart> alternatives) {
+		this.alternatives = alternatives;
+	}
 
 	public static class AlternativePart {
 		private String description;
@@ -41,6 +48,20 @@ public class CreateQuestion {
 		public Boolean isCorrect() {
 			return correct;
 		}
+
+		public Boolean getCorrect() {
+			return correct;
+		}
+
+		public void setCorrect(Boolean correct) {
+			this.correct = correct;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
+		
 		
 	}
 }

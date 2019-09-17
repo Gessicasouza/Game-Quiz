@@ -13,6 +13,7 @@ import br.com.game.api.CreateQuestion;
 import br.com.game.api.CreateQuestion.AlternativePart;
 import br.com.game.models.Alternative;
 import br.com.game.models.Question;
+import br.com.game.repositories.AlternativeRepository;
 import br.com.game.repositories.QuestionRepository;
 
 @Service
@@ -20,6 +21,9 @@ public class QuestionService {
 
 	@Autowired
 	private QuestionRepository questionRepository;
+	
+	@Autowired
+	private AlternativeRepository alternativeRepository;
 
 	public Iterable<Question> showAllQuestions() {
 		return questionRepository.findAll();
@@ -43,6 +47,7 @@ public class QuestionService {
 				.collect(Collectors.toList()));
 		
 		questionRepository.save(question);
+
 		
 		return question;
 //		question.setAlternatives(alternative);

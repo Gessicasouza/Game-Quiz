@@ -2,10 +2,14 @@ package br.com.game.models;
 
 import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -22,8 +26,10 @@ public class Question implements Serializable {
 	@NotBlank(message = "Invalid question field")
 	private String description;
 
-	@OneToMany(mappedBy = "question")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "question_id")
 	private List<Alternative> alternatives;
+
 
 	public Question() {
 

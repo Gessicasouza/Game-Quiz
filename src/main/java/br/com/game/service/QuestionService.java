@@ -47,6 +47,10 @@ public class QuestionService {
 		questionRepository.deleteById(id);
 	}
 
+	public void deleteAllQuestion() {
+		questionRepository.deleteAll();
+	}
+	
 	public Question updateQuestion(long id, Question update) {
 		Question test = new Question();
 		test = questionRepository.findById(id).get();

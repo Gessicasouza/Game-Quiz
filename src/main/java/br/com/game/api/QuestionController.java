@@ -67,6 +67,16 @@ public class QuestionController {
 		}
 	}
 
+	@DeleteMapping("/delete/all")
+	public ResponseEntity<?> deleteAllQuestion() {
+		if(questionService.quantityQuestions() > 0) {
+			questionService.deleteAllQuestion();
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+		
+
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateQuestion(@PathVariable long id, @RequestBody Question question) {
 		try {

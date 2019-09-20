@@ -37,7 +37,9 @@ public class QuestionController {
 	public ResponseEntity<?> takeQuestionById(@PathVariable long id) {
 		try {
 			Question question = questionService.takeQuestionById(id);
-			return ResponseEntity.ok(question);
+			QuestionRepresentation representation = new QuestionRepresentation();
+			representation.setId(question.getId());
+			return ResponseEntity.ok(representation);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
@@ -69,13 +71,12 @@ public class QuestionController {
 
 	@DeleteMapping("/delete/all")
 	public ResponseEntity<?> deleteAllQuestion() {
-		if(questionService.quantityQuestions() > 0) {
+		if (questionService.quantityQuestions() > 0) {
 			questionService.deleteAllQuestion();
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-		
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateQuestion(@PathVariable long id, @RequestBody Question question) {
@@ -84,6 +85,24 @@ public class QuestionController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
+		}
+	}
+
+	@GetMapping("/question/{idQuestion}")
+	public ResponseEntity<?> getCorrectAlternative(@PathVariable Long idQuestion) {
+		try {
+			return ResponseEntity.ok().body(questionService.getCorrectAlternative(idQuestion));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+
+	@GetMapping("/questionAwnser/{idQuestion}/{idAlternative}")
+	public ResponseEntity<?> testeMetodo(@PathVariable Long idQuestion, @PathVariable Long idAlternative) {
+		try {
+			return ResponseEntity.ok().body(questionService.checkCorrectAnswer(idQuestion, idAlternative));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 }

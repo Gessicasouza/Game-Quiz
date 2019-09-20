@@ -1,18 +1,25 @@
 package br.com.game.service;
 
+import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import br.com.game.api.CreateQuestion;
 import br.com.game.models.Alternative;
 import br.com.game.models.Question;
 import br.com.game.repositories.QuestionRepository;
+import br.com.game.repositories.UserRespository;
 
 @Service
 public class QuestionService {
 
 	@Autowired
 	private QuestionRepository questionRepository;
+
+	@Autowired
+	private UserRespository userRespository;
 
 	public Iterable<Question> showAllQuestions() {
 		return questionRepository.findAll();
@@ -28,6 +35,7 @@ public class QuestionService {
 	}
 
 	public Question createQuestion(CreateQuestion input) {
+		
 		Question question = new Question();
 		question.setDescription(input.getDescription());
 		question.setAlternatives(input.getAlternatives().stream().map(alternativePart -> {
@@ -50,7 +58,7 @@ public class QuestionService {
 	public void deleteAllQuestion() {
 		questionRepository.deleteAll();
 	}
-	
+
 	public Question updateQuestion(long id, Question update) {
 		Question test = new Question();
 		test = questionRepository.findById(id).get();
@@ -61,6 +69,30 @@ public class QuestionService {
 		}
 		return null;
 
+	}
+
+	public long getCorrectAlternative(Long idQuestion) {
+		Question question = questionRepository.findById(idQuestion).get();
+		long idCorreto = 0;
+//		List<Alternative> correctAlternative = new ArrayList<Alternative>();
+		List<Alternative> alternativas = question.getAlternatives();
+
+		for (Alternative alternative : alternativas) {
+			if (alternative.isCorrect() == true) {
+				idCorreto = alternative.getId();
+//				correctAlternative.add(alternative);
+				return idCorreto;
+			}
+		}
+		return idCorreto;
+	}
+
+	public boolean checkCorrectAnswer(Long idQuestion, Long alternative) {
+		if (getCorrectAlternative(idQuestion) == alternative) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package br.com.game.api;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.game.models.Question;
+import br.com.game.models.User;
 import br.com.game.service.QuestionService;
+import br.com.game.service.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,10 +27,13 @@ import br.com.game.service.QuestionService;
 public class QuestionController {
 
 	@Autowired
-	public QuestionService questionService;
+	private QuestionService questionService;
+
+	@Autowired
+	private UserService UserService;
 
 	@GetMapping
-	public ResponseEntity<?> showQuestions() {
+	public ResponseEntity<?> showQuestions(HttpSession session) {
 
 		if (questionService.quantityQuestions() > 0) {
 			return ResponseEntity.ok(questionService.showAllQuestions());
@@ -102,9 +108,18 @@ public class QuestionController {
 	@GetMapping("/questionAwnser/{idQuestion}/{idAlternative}")
 	public ResponseEntity<?> testeMetodo(@PathVariable Long idQuestion, @PathVariable Long idAlternative) {
 		try {
-			return ResponseEntity.ok().body(questionService.checkCorrectAnswer(idQuestion, idAlternative));
+			return ResponseEntity.ok().body(questionService.checkCorrectAnswer(null, idQuestion, idAlternative));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
+
+	@PostMapping("/user")
+	public ResponseEntity<?> saveUser(User user) {
+		try {
+			return ResponseEntity.ok().body(UserService.saveUser(user));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
 		}
 	}
 }

@@ -122,4 +122,14 @@ public class QuestionController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
+	
+	@GetMapping("/user")
+	public ResponseEntity<?> showUsers(){
+		try {
+			return ResponseEntity.ok().body(UserService.showAllUser());
+		} catch (Exception e) {
+			return ResponseEntity.noContent().build();
+		}
+	}
 }
+

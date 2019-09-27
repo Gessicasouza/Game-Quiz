@@ -12,9 +12,16 @@ public class UserService {
 	@Autowired
 	private UserRespository userRespository;
 	
+	public Iterable<User> showAllUser() {
+		return userRespository.findAll();
+	}
+
 	public User showUserById(Long id){
 		return userRespository.findById(id).get();
 	}
 	
+	public User saveUser(User user) {
+		return userRespository.save(user);
+	}
 	
 }

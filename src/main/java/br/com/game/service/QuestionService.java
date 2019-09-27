@@ -3,14 +3,16 @@ package br.com.game.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.game.api.CreateQuestion;
 import br.com.game.models.Alternative;
 import br.com.game.models.Question;
+import br.com.game.models.User;
 import br.com.game.repositories.QuestionRepository;
-import br.com.game.repositories.UserRespository;
 
 @Service
 public class QuestionService {
@@ -19,8 +21,6 @@ public class QuestionService {
 	private QuestionRepository questionRepository;
 
 	@Autowired
-	private UserRespository userRespository;
-
 	public Iterable<Question> showAllQuestions() {
 		return questionRepository.findAll();
 	}
@@ -35,7 +35,7 @@ public class QuestionService {
 	}
 
 	public Question createQuestion(CreateQuestion input) {
-		
+
 		Question question = new Question();
 		question.setDescription(input.getDescription());
 		question.setAlternatives(input.getAlternatives().stream().map(alternativePart -> {
@@ -87,11 +87,25 @@ public class QuestionService {
 		return idCorreto;
 	}
 
-	public boolean checkCorrectAnswer(Long idQuestion, Long alternative) {
-		if (getCorrectAlternative(idQuestion) == alternative) {
-			return true;
+	public boolean checkCorrectAnswer(HttpSession session, Long idQuestion, Long alternative) {
+		
+		boolean correct = false;
+
+		User user = (User) session.getAttribute("user");
+
+		if (user != null) {
+
+			if (getCorrectAlternative(idQuestion) == alternative) {
+
+//				user.getAnsweredQuestions().add(idQuestion);
+				correct = true;
+
+				return correct;
+			} else {
+				return correct;
+			}
 		} else {
-			return false;
+			return correct;
 		}
 	}
 

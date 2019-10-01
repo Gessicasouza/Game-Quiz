@@ -30,7 +30,7 @@ public class QuestionController {
 	private QuestionService questionService;
 
 	@Autowired
-	private UserService UserService;
+	private UserService userService;
 
 	@GetMapping
 	public ResponseEntity<?> showQuestions(HttpSession session) {
@@ -115,21 +115,33 @@ public class QuestionController {
 	}
 
 	@PostMapping("/user")
-	public ResponseEntity<?> saveUser(User user) {
+	public ResponseEntity<?> saveUser(@RequestBody User user) {
 		try {
-			return ResponseEntity.ok().body(UserService.saveUser(user));
+			userService.saveUser(user);
+			return ResponseEntity.status(HttpStatus.CREATED).body(user);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
-	
-	@GetMapping("/user")
-	public ResponseEntity<?> showUsers(){
-		try {
-			return ResponseEntity.ok().body(UserService.showAllUser());
-		} catch (Exception e) {
-			return ResponseEntity.noContent().build();
-		}
-	}
-}
 
+	@GetMapping("/user")
+	public ResponseEntity<?> showUsers() {
+		try {
+			return ResponseEntity.ok().body(userService.showAllUser());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+
+	@GetMapping("/user/{id}")
+	public ResponseEntity<?> showUsersById(@PathVariable long id) {
+		try {
+			User user = userService.showUserById(id);
+			return ResponseEntity.ok(user);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+		}
+	}
+
+}

@@ -88,7 +88,7 @@ public class QuestionService {
 	}
 
 	public boolean checkCorrectAnswer(HttpSession session, Long idQuestion, Long alternative) {
-		
+
 		boolean correct = false;
 
 		User user = (User) session.getAttribute("user");

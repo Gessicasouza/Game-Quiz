@@ -25,9 +25,9 @@ public class Alternative implements Serializable {
 	private boolean correct;
 
 	@ManyToOne
-	
+
 	private Question question;
-	
+
 	public Alternative() {
 
 	}
@@ -55,7 +55,5 @@ public class Alternative implements Serializable {
 	public void setCorrect(boolean correct) {
 		this.correct = correct;
 	}
-	
-	
 
 }

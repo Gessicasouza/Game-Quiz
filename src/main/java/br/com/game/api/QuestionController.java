@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.game.models.Question;
-import br.com.game.models.User;
 import br.com.game.service.QuestionService;
 import br.com.game.service.UserService;
 
@@ -108,40 +107,11 @@ public class QuestionController {
 	@GetMapping("/questionAwnser/{idQuestion}/{idAlternative}")
 	public ResponseEntity<?> testeMetodo(@PathVariable Long idQuestion, @PathVariable Long idAlternative) {
 		try {
-			return ResponseEntity.ok().body(questionService.checkCorrectAnswer(null, idQuestion, idAlternative));
+			return ResponseEntity.ok().body(questionService.checkCorrectAnswer(idQuestion, idAlternative));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
-	@PostMapping("/user")
-	public ResponseEntity<?> saveUser(@RequestBody User user) {
-		try {
-			userService.saveUser(user);
-			return ResponseEntity.status(HttpStatus.CREATED).body(user);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
-	}
-
-	@GetMapping("/user")
-	public ResponseEntity<?> showUsers() {
-		try {
-			return ResponseEntity.ok().body(userService.showAllUser());
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-	}
-
-	@GetMapping("/user/{id}")
-	public ResponseEntity<?> showUsersById(@PathVariable long id) {
-		try {
-			User user = userService.showUserById(id);
-			return ResponseEntity.ok(user);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-		}
-	}
 
 }

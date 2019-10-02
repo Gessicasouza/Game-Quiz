@@ -14,6 +14,8 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	private String idGoogle;
 
 	private String name;
 
@@ -31,6 +33,14 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
+	public String getIdGoogle() {
+		return idGoogle;
+	}
+	
+	public void setIdGoogle(String idGoogle) {
+		this.idGoogle = idGoogle;
+	}
+	
 	public String getName() {
 		return name;
 	}

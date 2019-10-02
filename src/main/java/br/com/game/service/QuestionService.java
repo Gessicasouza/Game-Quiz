@@ -87,13 +87,13 @@ public class QuestionService {
 		return idCorreto;
 	}
 
-	public boolean checkCorrectAnswer(HttpSession session, Long idQuestion, Long alternative) {
+	public boolean checkCorrectAnswer(Long idQuestion, Long alternative) {
 
 		boolean correct = false;
 
-		User user = (User) session.getAttribute("user");
+//		User user = (User) session.getAttribute("user");
 
-		if (user != null) {
+//		if (user != null) {
 
 			if (getCorrectAlternative(idQuestion) == alternative) {
 
@@ -104,9 +104,9 @@ public class QuestionService {
 			} else {
 				return correct;
 			}
-		} else {
-			return correct;
+//		} else {
+//			return correct;
 		}
-	}
+//	}
 
 }

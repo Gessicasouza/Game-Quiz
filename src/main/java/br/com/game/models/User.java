@@ -1,11 +1,14 @@
 package br.com.game.models;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class User implements Serializable {
@@ -15,12 +18,18 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
 	private String idGoogle;
 
+	@NotNull
 	private String name;
 
+	@NotNull
 	private String email;
 
+	@ElementCollection
+	private List<Long> questionsAnswered;
+	
 	public User() {
 
 	}
@@ -57,4 +66,11 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	public List<Long> getQuestionsAnswered() {
+		return questionsAnswered;
+	}
+	
+	public void setQuestionsAnswered(List<Long> questionsAnswered) {
+		this.questionsAnswered = questionsAnswered;
+	}
 }

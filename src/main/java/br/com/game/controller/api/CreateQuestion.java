@@ -1,4 +1,4 @@
-package br.com.game.api;
+package br.com.game.controller.api;
 
 import java.util.List;
 

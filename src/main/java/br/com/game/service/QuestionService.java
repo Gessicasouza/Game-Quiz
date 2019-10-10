@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.game.api.CreateQuestion;
+import br.com.game.controller.api.CreateQuestion;
 import br.com.game.models.Alternative;
 import br.com.game.models.Question;
 import br.com.game.models.User;

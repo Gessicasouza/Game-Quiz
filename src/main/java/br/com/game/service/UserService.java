@@ -16,13 +16,14 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-	public User showUserById(Long id) {
-		return userRepository.findById(id).get();
+	public User showUserById(String id) {
+		return userRepository.findByIdGoogle(id);
 	}
 
 	public User saveUser(User user) {
 		return userRepository.save(user);
 	}
 
+	
 	
 }

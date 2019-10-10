@@ -1,4 +1,6 @@
-package br.com.game.api;
+package br.com.game.controller.api;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,9 +34,10 @@ public class UserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> saveUser(@RequestBody User user) {
+	public ResponseEntity<?> saveUser(HttpSession session, @RequestBody User user) {
 		try {
 			userService.saveUser(user);
+			session.setAttribute("user", user);
 			return ResponseEntity.status(HttpStatus.CREATED).body(user);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -42,9 +45,10 @@ public class UserController {
 	}
 	
 	@GetMapping("/{idGoogle}")
-	public ResponseEntity<?> showUsersById(@PathVariable long idGoogle) {
+	public ResponseEntity<?> showUsersById(@PathVariable String idGoogle, HttpSession session) {
 		try {
 			User user = userService.showUserById(idGoogle);
+			session.setAttribute("user", user);
 			return ResponseEntity.ok(user);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

@@ -1,4 +1,4 @@
-package br.com.game.api;
+package br.com.game.controller.api;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.game.models.Question;
 import br.com.game.service.QuestionService;
-import br.com.game.service.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -27,9 +26,6 @@ public class QuestionController {
 
 	@Autowired
 	private QuestionService questionService;
-
-	@Autowired
-	private UserService userService;
 
 	@GetMapping
 	public ResponseEntity<?> showQuestions(HttpSession session) {
@@ -105,7 +101,7 @@ public class QuestionController {
 	}
 
 	@GetMapping("/questionAwnser/{idQuestion}/{idAlternative}")
-	public ResponseEntity<?> testeMetodo(@PathVariable Long idQuestion, @PathVariable Long idAlternative) {
+	public ResponseEntity<?> checkCorrectAwnser(@PathVariable Long idQuestion, @PathVariable Long idAlternative) {
 		try {
 			return ResponseEntity.ok().body(questionService.checkCorrectAnswer(idQuestion, idAlternative));
 		} catch (Exception e) {

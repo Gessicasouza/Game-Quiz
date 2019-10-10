@@ -1,4 +1,4 @@
-package br.com.game.api;
+package br.com.game.controller.api;
 
 public class QuestionRepresentation {
 	private Long id;
